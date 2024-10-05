@@ -91,12 +91,12 @@ button:focus-visible {
 #gameContainer{
   width: 40rem;
   /* height: 20rem; */
-  border: 2px solid red;
+  /* border: 2px solid red; */
 
 
 }
 .playersContainer{
-  height: 3rem;
+  height: 5rem;
   width: 40rem;
   border: 2px solid black;
   display: flex;
@@ -104,19 +104,27 @@ button:focus-visible {
 }
 .player{
   width: 50%;
-  height: 3rem;
+  height: full;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
 }
+.hightlight-player{
+  border-color: #f6e35a;
+  
+}
+
 .player:hover{
-  background-color: red;
+  background-color: #ffffff;
   cursor: pointer;
+  color: black;
 }
 .playerName{
 margin-right: 20px;
 }
-.playerSymbol{
 
-}
+
 .editButton{
   margin-left: 20px;
 }
@@ -141,3 +149,62 @@ margin-right: 20px;
   padding: 5px;
   text-align: center;
 }
+
+
+
+
+/* Highlight the player's field when active */
+.player.active {
+  border: 2px solid #f6e35a;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Highlight the player's symbol when active */
+.playerSymbol.active {
+  border: 2px solid #f6e35a;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Animation for the pulse effect */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Add hover effects for both player and playerSymbol (if needed) */
+.player:hover, .playerSymbol:hover {
+  cursor: pointer;
+}
+
+/* Optional styles for input field */
+input[type="text"] {
+  border: 2px solid #646cff;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* Animation for when a mark is placed on the game board */
+@keyframes symbolGrow {
+  0% {
+    transform: scale(1);   /* Start at normal size */
+  }
+  50% {
+    transform: scale(1.3); /* Scale up the symbol slightly */
+  }
+  100% {
+    transform: scale(1);   /* Return to normal size */
+  }
+}
+
+/* Applying the grow animation when a symbol is placed on the game board */
+.game-board-btn.marked {
+  animation: symbolGrow 0.5s ease-in-out;
+}
+

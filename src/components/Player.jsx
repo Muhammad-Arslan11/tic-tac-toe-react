@@ -18,7 +18,9 @@ export default function Player(props) {
     setIsEditing((editing)=> !editing );
   }
 
-   let editablePlayerName =    <span className="playerName">{playerName}</span>;
+   let editablePlayerName =     <span className={`playerName ${props.isActive ? 'active' : ''}`}>
+   {playerName}
+ </span>
 
     if(isEditing){
       editablePlayerName = <input type="text" required value={playerName} onChange={handleChange}/>;
@@ -27,12 +29,12 @@ export default function Player(props) {
 
   return (
     <>
-      <li className="player">
+      <li className={`player`}>
        {editablePlayerName}
-        <span className="playerSymbo">{props.symbol}</span>
-        <button className="editButton" onClick={handleClick} >{
+        <span className={`playerSymbol ${props.isActive ? 'active' : ''}`}>{props.symbol}</span>
+        <div className="editButton" onClick={handleClick} >{
           isEditing ? "Save" : "Edit"
-           }</button>
+           }</div>
       </li>
     </>
   );
@@ -41,4 +43,5 @@ export default function Player(props) {
 Player.propTypes = {
   name: PropTypes.string.isRequired,
   symbol: PropTypes.string.isRequired,
+  isActive: PropTypes.bool,
 };

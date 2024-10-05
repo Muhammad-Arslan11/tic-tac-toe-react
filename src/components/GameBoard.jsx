@@ -21,7 +21,7 @@ export default function GameBoard(props){
 
      setGameBoard((prevGameBoard)=>{
        const updatedGameBoard = [...prevGameBoard.map((prevArray) => [...prevArray])]; // it hold the content of original array
-        updatedGameBoard[rowIndex][colIndex] = 'X';
+        updatedGameBoard[rowIndex][colIndex] = props.activePlayerSymbol;
         return updatedGameBoard;
      });
 
@@ -37,7 +37,7 @@ export default function GameBoard(props){
                 {row.map((playerSymbol, colIndex)=> (
             <li key={colIndex}>
                 <button 
-                className="game-board-btn" 
+                className={`game-board-btn ${playerSymbol ? 'marked' : ''}`}
                 onClick={()=> handleSelectSquare(rowIndex,colIndex)}>
                   {playerSymbol}
                   </button>
@@ -53,4 +53,5 @@ export default function GameBoard(props){
 
 GameBoard.propTypes = {
   onPlayerSelect: PropTypes.func.isRequired,
+  activePlayerSymbol: PropTypes.string,
 };
