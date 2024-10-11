@@ -2,26 +2,12 @@
 import PropTypes from 'prop-types';
 
 
-const intialGameBoard =  
-  [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
-  ];
+
 
 
 export default function GameBoard(props){
 
-   let gameBoard = intialGameBoard;
 
-   for(const turn of props.turns){
-    // twice destructuring 
-       const {square, player} = turn;
-       const {row, col} = square;
-
-       gameBoard[row][col] = player;
-
-   }
   
   //  const[gameBoard, setGameBoard] = useState(intialGameBoard);
 
@@ -42,14 +28,22 @@ export default function GameBoard(props){
 
     return (
       <ol className="game-board">
-        {gameBoard.map((row, rowIndex)=> (
+        {props.board.map((row, rowIndex)=> (
         <li key={rowIndex}>
             <ol>
                 {row.map((playerSymbol, colIndex)=> (
             <li key={colIndex}>
                 <button 
                 className={`game-board-btn ${playerSymbol ? 'marked' : ''}`}
-                onClick={()=> props.onPlayerSelect(rowIndex, colIndex)}>
+                onClick={
+                  ()=>{
+                    
+                    if(playerSymbol) return;  // disable the recurring clicks once the box is clicked
+                    props.onPlayerSelect(rowIndex, colIndex)
+                  } 
+                  }
+                //  disabled={!!playerSymbol} 
+                 >
                   {playerSymbol}
                   </button>
             </li>
@@ -65,5 +59,5 @@ export default function GameBoard(props){
 GameBoard.propTypes = {
   onPlayerSelect: PropTypes.func.isRequired,
   activePlayerSymbol: PropTypes.string,
-  turns: PropTypes.array,
+  board: PropTypes.array,
 };
