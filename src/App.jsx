@@ -3,8 +3,9 @@ import Player from './components/Player.jsx';
 import GameBoard from './components/GameBoard.jsx';
 import Log from './components/Log.jsx';
 import './App.css'
-import { useState } from 'react';
+import { useState} from 'react';
 import { WINNING_COMBINATIONS } from '../winning-combinations.js';
+import GameOver from './components/GameOver.jsx';
 
 
 function deriveActivePlayer(gameTurns){
@@ -21,11 +22,13 @@ function deriveActivePlayer(gameTurns){
 
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
+  // const [winner, setWinner] = useState(null);
   // const [activePlayer, setActivePlayer]  = useState('X');
   // lift the state from GameBoard component
   // reduce as much of state as you possibilly can
   let activePlayer = deriveActivePlayer(gameTurns);
 
+  let winner = null;
   const intialGameBoard =  
   [
       [null, null, null],
@@ -44,7 +47,6 @@ function App() {
 
   }
 
-  let winner = null;
 
   for(const combination of WINNING_COMBINATIONS){
      const firstSquareSymbol = gameBoard[combination[0].row][combination[0].col];
@@ -58,6 +60,8 @@ function App() {
      winner = firstSquareSymbol;
    }
   }
+
+  let draw = gameTurns.length === 9 && !winner;
 
 
   function handleSelectSquare(rowIndex, colIndex){
@@ -86,6 +90,7 @@ function App() {
          <Player name="Player 1" symbol="X" isActive={activePlayer === 'X'} />
          <Player name="Player 2" symbol="O"  isActive={activePlayer === 'O'}/>
         </ol>
+        {(winner || draw) && <GameOver winner={winner} />}
        <GameBoard onPlayerSelect={handleSelectSquare} activePlayerSymbol={activePlayer} board={gameBoard} />
       </div>
      
